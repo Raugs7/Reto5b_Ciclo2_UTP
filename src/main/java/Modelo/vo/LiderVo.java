@@ -9,7 +9,7 @@ package Modelo.vo;
  * @author SKAPHE
  */
 public class LiderVo {
-    private Integer ID;
+    private String ID;
     private String nombre;
     private String primer_Apellido;
     private String ciudad;
@@ -17,14 +17,14 @@ public class LiderVo {
     /**
      * @return the ID
      */
-    public Integer getID() {
+    public String getID() {
         return ID;
     }
 
     /**
      * @param ID the ID to set
      */
-    public void setID(Integer ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
@@ -73,7 +73,7 @@ public class LiderVo {
     @Override
     public String toString(){
         
-        return String.format("%3d %-25s %-25s %-25s", this.ID, this.nombre, this.primer_Apellido, this.ciudad); 
+        return String.format("%-3s %-15s %-15s %-15s", this.ID, this.nombre, this.primer_Apellido, this.ciudad); 
         
     }
 

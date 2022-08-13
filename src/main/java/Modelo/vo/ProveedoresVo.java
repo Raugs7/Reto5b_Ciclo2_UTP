@@ -9,21 +9,21 @@ package Modelo.vo;
  * @author SKAPHE
  */
 public class ProveedoresVo {
-    private Integer ID_compra;
+    private String ID_compra;
     private String constructora;
     private String banco_vinculado;
 
     /**
      * @return the ID_compra
      */
-    public Integer getID_compra() {
+    public String getID_compra() {
         return ID_compra;
     }
 
     /**
      * @param ID_compra the ID_compra to set
      */
-    public void setID_compra(Integer ID_compra) {
+    public void setID_compra(String ID_compra) {
         this.ID_compra = ID_compra;
     }
 
@@ -58,7 +58,7 @@ public class ProveedoresVo {
     @Override
     public String toString(){
         
-        return String.format("%3d %-25s %-25s", this.ID_compra, this.constructora, this.banco_vinculado); 
+        return String.format("%-3s %-25s %-25s", this.ID_compra, this.constructora, this.banco_vinculado); 
         
     }
 }

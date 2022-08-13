@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import util.JDBCUtilities;
 
@@ -20,7 +21,7 @@ import util.JDBCUtilities;
 public class LiderDao {
     
      public List<LiderVo> listar()throws SQLException {
-        ArrayList<LiderVo> respuesta = new ArrayList<LiderVo>();
+        LinkedList<LiderVo> respuesta = new LinkedList<LiderVo>();
         
         Connection conn = JDBCUtilities.getConnection();
         PreparedStatement stmt = null;
@@ -39,13 +40,14 @@ public class LiderDao {
             while (rs.next()){
                 LiderVo liderVo = new LiderVo();
                 
-                liderVo.setID(rs.getInt("ID_Lider"));
+                liderVo.setID(rs.getString("ID_Lider"));
                 liderVo.setNombre(rs.getString("Nombre"));
                 liderVo.setPrimer_Apellido(rs.getString("Primer_Apellido"));
                 liderVo.setCiudad(rs.getString("Ciudad_Residencia"));               
                 
                 
                 respuesta.add(liderVo);
+                
             }
         }
         finally {

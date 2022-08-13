@@ -9,9 +9,13 @@ import Controlador.ReportesController;
 import Modelo.vo.*;
 import Modelo.dao.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 /**
  *
@@ -37,24 +41,45 @@ public class View extends javax.swing.JFrame {
         initComponents();
         this.ReportesController = new ReportesController();
         this.LiderVo = new LiderVo();
-        this.LiderDao = new LiderDao();
+        this.LiderDao = new LiderDao();        
         
     }
     
     public void informelider(){
         
         try{
-            List<LiderVo> lideres = ReportesController.listarLideres();
-            tablaInforme1.setModel((TableModel) ReportesController.listarLideres());
+            LinkedList<LiderVo> lideres = (LinkedList<LiderVo>) ReportesController.listarLideres();
+            String columns[] = {"id", "nombre", "apellido", "ciudad"};
+            DefaultTableModel  tbModel = (DefaultTableModel) tablaInforme1.getModel();
+            for (String col : columns) {
+                tbModel.addColumn(col);
+            }
+            
+            for (LiderVo lider : lideres){
+                String id = lider.getID();
+                String primer_Apellido = lider.getPrimer_Apellido();
+                String ciudad = lider.getCiudad();
+                String nombre = lider.getNombre();
+                String rows[] = {id, nombre, primer_Apellido, ciudad};
+                tbModel.addRow(rows);
+            }
+           
             tituloInforme.setText("Informe de líderes");
-            /**for(LiderVo lider: lideres){   **/             
-                areaResultado2.setText(String.valueOf(lideres));              
+            
+            /**areaResultado2.setText(String.valueOf(lideres));
+            
+            for(LiderVo lider: lideres){             
+                areaResultado2.setText(String.valueOf(lideres));               
+                Object[] data = {lider};
+                DefaultTableModel tableModel = new DefaultTableModel(data,2);
+                tableModel.addRow(data);
+                tablaInforme1.setModel(tableModel);
                 
                 
-            /**}**/
+            } **/
             
         } catch (Exception e){
-                areaResultado2.setText("Error: +" + e);
+                tituloInforme.setText("Error: +" + e);
                 e.printStackTrace();
                 }                           
     
@@ -63,14 +88,32 @@ public class View extends javax.swing.JFrame {
     public void informeproyectos(){
         
         try{
+            tituloInforme.setText("Informe de proyectos");
             List<ProyectosVo> proyectos = ReportesController.listarProyectos();
-            for(ProyectosVo proyecto: proyectos){
-                tituloInforme.setText("Informe de proyectos");
-                areaResultado2.setText(String.valueOf(proyecto));
+            String columns[] = {"id", "Constructora", "# Habitaciones", "Ciudad"};
+            DefaultTableModel  tbModel = (DefaultTableModel) tablaInforme1.getModel();
+            for (String col : columns) {
+                tbModel.addColumn(col);
             }
             
+            for (ProyectosVo proyecto : proyectos){
+                String id = proyecto.getID_Proyecto();
+                String constructora = proyecto.getConstructora();
+                String habitaciones = proyecto.getNumero_Habitaciones();
+                String ciudad = proyecto.getCiudad();
+                String rows[] = {id, constructora, habitaciones, ciudad};
+                tbModel.addRow(rows);
+            }                                  
+            
+            
+            
+            /**for(ProyectosVo proyecto: proyectos){
+                tituloInforme.setText("Informe de proyectos");
+                areaResultado2.setText(String.valueOf(proyecto));
+            }**/
+            
         } catch (Exception e){
-                areaResultado2.setText("Error: +" + e);
+                tituloInforme.setText("Error: +" + e);
                 e.printStackTrace();
                 }                           
     
@@ -79,14 +122,24 @@ public class View extends javax.swing.JFrame {
     public void informeproveedores(){
         
         try{
+            tituloInforme.setText("Informe de proveedores");
             List<ProveedoresVo> proveedores = ReportesController.listarProveedores();
-            for(ProveedoresVo proveedor: proveedores){
-                tituloInforme.setText("Informe de proveedores");
-                areaResultado2.setText(String.valueOf(proveedor));
+            String columns[] = {"ID", "Constructora", "Banco vinculado"};
+            DefaultTableModel  tbModel = (DefaultTableModel) tablaInforme1.getModel();
+            for (String col : columns) {
+                tbModel.addColumn(col);
             }
             
+            for (ProveedoresVo proveedor : proveedores){
+                String id = proveedor.getID_compra();
+                String constructora = proveedor.getConstructora();
+                String banco = proveedor.getBanco_vinculado();
+                String rows[] = {id, constructora, banco};
+                tbModel.addRow(rows);
+            }  
+            
         } catch (Exception e){
-                areaResultado2.setText("Error: +" + e);
+                tituloInforme.setText("Error: +" + e);
                 e.printStackTrace();
                 }                           
     
@@ -109,8 +162,6 @@ public class View extends javax.swing.JFrame {
         informe2btn = new javax.swing.JButton();
         informe3btn = new javax.swing.JButton();
         limpiarbtn = new javax.swing.JButton();
-        areaResultado = new javax.swing.JScrollPane();
-        areaResultado2 = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tituloInforme = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -154,8 +205,9 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        areaResultado.setViewportView(areaResultado2);
-
+        tituloInforme.setBackground(new java.awt.Color(242, 242, 242));
+        tituloInforme.setBorder(null);
+        tituloInforme.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jScrollPane1.setViewportView(tituloInforme);
 
         tablaInforme1.setModel(new javax.swing.table.DefaultTableModel(
@@ -163,17 +215,9 @@ public class View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nombre", "Primer Apellido", "Ciudad"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, true
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane3.setViewportView(tablaInforme1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,7 +235,6 @@ public class View extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(areaResultado)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,10 +265,8 @@ public class View extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(areaResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -260,8 +301,14 @@ public class View extends javax.swing.JFrame {
 
     
     private void limpiarCampos() {        
-        tituloInforme.setText("");
-        areaResultado2.setText("");        
+        tituloInforme.setText("");        
+        DefaultTableModel model_info;
+        //JTable variable name is jTable1_info....
+        model_info=(DefaultTableModel)tablaInforme1.getModel();
+        //Clear all the column name on jtable jpanel-4
+        model_info.setColumnCount(0);
+        ((DefaultTableModel)tablaInforme1.getModel()).setNumRows(0);
+        
     }
     
     /**
@@ -300,8 +347,6 @@ public class View extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane areaResultado;
-    private javax.swing.JTextPane areaResultado2;
     private javax.swing.JButton informe1btn;
     private javax.swing.JButton informe2btn;
     private javax.swing.JButton informe3btn;

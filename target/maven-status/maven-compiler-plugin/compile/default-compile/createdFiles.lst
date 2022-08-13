@@ -7,7 +7,6 @@ Controlador\ReportesController.class
 Vista\View$1.class
 Modelo\dao\LiderDao.class
 Vista\View$5.class
-Vista\View$6.class
 util\JDBCUtilities.class
 Vista\View$4.class
 Modelo\vo\ProveedoresVo.class

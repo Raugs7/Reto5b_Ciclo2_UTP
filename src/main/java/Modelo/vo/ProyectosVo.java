@@ -9,22 +9,22 @@ package Modelo.vo;
  * @author SKAPHE
  */
 public class ProyectosVo {
-    private Integer ID_Proyecto;
+    private String ID_Proyecto;
     private String constructora;
-    private Integer numero_Habitaciones;
+    private String numero_Habitaciones;
     private String ciudad;
 
     /**
      * @return the ID_Proyecto
      */
-    public Integer getID_Proyecto() {
+    public String getID_Proyecto() {
         return ID_Proyecto;
     }
 
     /**
      * @param ID_Proyecto the ID_Proyecto to set
      */
-    public void setID_Proyecto(Integer ID_Proyecto) {
+    public void setID_Proyecto(String ID_Proyecto) {
         this.ID_Proyecto = ID_Proyecto;
     }
 
@@ -45,14 +45,14 @@ public class ProyectosVo {
     /**
      * @return the numero_Habitaciones
      */
-    public Integer getNumero_Habitaciones() {
+    public String getNumero_Habitaciones() {
         return numero_Habitaciones;
     }
 
     /**
      * @param numero_Habitaciones the numero_Habitaciones to set
      */
-    public void setNumero_Habitaciones(Integer numero_Habitaciones) {
+    public void setNumero_Habitaciones(String numero_Habitaciones) {
         this.numero_Habitaciones = numero_Habitaciones;
     }
 
@@ -73,7 +73,7 @@ public class ProyectosVo {
     @Override
     public String toString(){
         
-        return String.format("%3d %-25s %7d %-25s", this.ID_Proyecto, this.constructora, this.numero_Habitaciones, this.ciudad); 
+        return String.format("%-3s %-25s %-7s %-25s", this.ID_Proyecto, this.constructora, this.numero_Habitaciones, this.ciudad); 
         
     }
 }

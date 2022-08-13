@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import util.JDBCUtilities;
 
@@ -20,7 +21,7 @@ import util.JDBCUtilities;
  */
 public class ProveedoresDao {
     public List<ProveedoresVo> listar()throws SQLException {
-        ArrayList<ProveedoresVo> respuesta = new ArrayList<ProveedoresVo>();
+        LinkedList<ProveedoresVo> respuesta = new LinkedList<ProveedoresVo>();
         
         Connection conn = JDBCUtilities.getConnection();
         PreparedStatement stmt = null;
@@ -40,7 +41,7 @@ public class ProveedoresDao {
             while (rs.next()){
                 ProveedoresVo proveedoresVo = new ProveedoresVo();
                 
-                proveedoresVo.setID_compra(rs.getInt("ID_Compra"));
+                proveedoresVo.setID_compra(rs.getString("ID_Compra"));
                 proveedoresVo.setConstructora(rs.getString("Constructora"));
                 proveedoresVo.setBanco_vinculado(rs.getString("Banco_Vinculado"));              
                 

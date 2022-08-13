@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import util.JDBCUtilities;
 
@@ -19,7 +20,7 @@ import util.JDBCUtilities;
  */
 public class ProyectosDao {
     public List<ProyectosVo> listar()throws SQLException {
-        ArrayList<ProyectosVo> respuesta = new ArrayList<ProyectosVo>();
+        LinkedList<ProyectosVo> respuesta = new LinkedList<ProyectosVo>();
         
         Connection conn = JDBCUtilities.getConnection();
         PreparedStatement stmt = null;
@@ -38,9 +39,9 @@ public class ProyectosDao {
             while (rs.next()){
                 ProyectosVo proyectosVo = new ProyectosVo();
                 
-                proyectosVo.setID_Proyecto(rs.getInt("ID_Proyecto"));
+                proyectosVo.setID_Proyecto(rs.getString("ID_Proyecto"));
                 proyectosVo.setConstructora(rs.getString("Constructora"));
-                proyectosVo.setNumero_Habitaciones(rs.getInt("Numero_Habitaciones"));
+                proyectosVo.setNumero_Habitaciones(rs.getString("Numero_Habitaciones"));
                 proyectosVo.setCiudad(rs.getString("Ciudad"));               
                 
                 
